@@ -1,6 +1,11 @@
 use std::path::PathBuf;
 use structopt::StructOpt;
 
+enum ManifestFormat {
+    YAML,
+    JSON,
+}
+
 #[derive(Debug, StructOpt)]
 /// A tool for interacting with keybind manifests.
 struct Opt {
