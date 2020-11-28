@@ -5,6 +5,7 @@ vbinds - Tests for the data cache.
 
 # internal
 import tempfile
+import os
 
 # module under test
 from vbinds.classes.cache import Cache
@@ -14,6 +15,7 @@ def test_cache_basic():
     """ Test that a second cache-load will have the correct data. """
 
     temp_cache = tempfile.mkdtemp()
+    os.removedirs(temp_cache)
 
     cache = Cache(temp_cache)
     test_data = cache.get("test")
