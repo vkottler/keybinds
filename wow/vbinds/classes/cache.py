@@ -4,9 +4,11 @@ vbinds - A simple data cache with file-system backing.
 """
 
 # built-in
+from collections import defaultdict
 import json
 import os
 import shutil
+from typing import Dict
 
 # internal
 from . import DEFAULT_CACHE
@@ -21,7 +23,7 @@ class Cache:
         self.dir = cache_dir
         if not os.path.isdir(self.dir):
             os.makedirs(self.dir)
-        self.data = defaultdict(dict)
+        self.data: Dict[str, dict] = defaultdict(dict)
         self.load()
 
     def save(self) -> None:
@@ -36,7 +38,7 @@ class Cache:
         """ Load each JSON file in the cache as data. """
 
         for filename in os.listdir(self.dir):
-            with open(filename) as in_file:
+            with open(os.path.join(self.dir, filename)) as in_file:
                 key = filename.replace(".json", "")
                 self.data[key] = json.loads(in_file.read())
 
