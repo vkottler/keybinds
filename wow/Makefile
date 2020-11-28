@@ -10,7 +10,7 @@ VENV_DIR       := $($(PROJ)_DIR)/$(VENV_NAME)
 PYTHON_BIN     := $(VENV_DIR)/bin
 
 include $($(PROJ)_DIR)/mk/functions.mk
-include $($(PROJ)_DIR)/mk/venv.mk
+include $($(PROJ)_DIR)/mk/virtualenv.mk
 
 $(BUILD_DIR):
 	@mkdir -p $@/$(VENV_NAME)
