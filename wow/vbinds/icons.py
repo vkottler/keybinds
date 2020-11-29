@@ -18,7 +18,8 @@ LOG = logging.getLogger(__name__)
 
 
 def get_icon(name: str, dest_root: str = ".",
-             size: IconSize = IconSize.LARGE) -> Optional[str]:
+             size: IconSize = IconSize.LARGE,
+             size_subdir: bool = True) -> Optional[str]:
     """
     Write an image file to disk for a given icon. Return the path written.
     """
@@ -31,9 +32,11 @@ def get_icon(name: str, dest_root: str = ".",
         return None
 
     # write the file contents
-    dest_dir = os.path.join(dest_root, str(size.value))
+    dest_dir = dest_root
+    if size_subdir:
+        dest_dir = os.path.join(dest_root, str(size.value))
     os.makedirs(dest_dir, exist_ok=True)
-    full_path = os.path.join(dest_dir, "{}.jpg".format(name))
+    full_path = os.path.abspath(os.path.join(dest_dir, "{}.jpg".format(name)))
     with open(full_path, "wb") as img_fd:
         for chunk in req.iter_content(chunk_size=256):
             img_fd.write(chunk)
