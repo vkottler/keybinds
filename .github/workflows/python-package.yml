@@ -23,6 +23,11 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+    - uses: secrethub/actions/env-export@v0.1.0
+      env:
+        SECRETHUB_CREDENTIAL: ${{ secrets.SECRETHUB_CREDENTIAL }}
+        BLIZZ_API_ID: secrethub://vdoer/keybinds/blizzard/id
+        BLIZZ_API_SECRET: secrethub://vdoer/keybinds/blizzard/secret
     - name: venv
       run: |
         make -C wow PYTHON_VERSION=${{matrix.python-version}} venv

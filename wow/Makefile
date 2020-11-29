@@ -11,18 +11,19 @@ PYTHON_BIN     := $(VENV_DIR)/bin
 
 include $($(PROJ)_DIR)/mk/functions.mk
 include $($(PROJ)_DIR)/mk/virtualenv.mk
+include $($(PROJ)_DIR)/mk/env.mk
 
 $(BUILD_DIR):
 	@mkdir -p $@/$(VENV_NAME)
 
-lint-%: $(VENV_CONC)
+lint-%: $(VENV_CONC) check-env
 	$(PYTHON_BIN)/$* $(PROJ) tests
 
 lint: lint-flake8 lint-pylint
 
 sa: lint-mypy
 
-test: $(VENV_CONC)
+test: $(VENV_CONC) check-env
 	$(PYTHON_BIN)/pytest -x --log-cli-level=10 --cov=$(PROJ) --cov-report html
 
 view:
