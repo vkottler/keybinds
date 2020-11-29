@@ -34,6 +34,9 @@ host-coverage:
 
 all: lint sa test todo
 
+todo:
+	-cd $($(PROJ)_DIR) && ack -i todo $(PROJ) tests
+
 clean:
 	@find -iname '*.pyc' -delete
 	@find -iname '__pycache__' -delete

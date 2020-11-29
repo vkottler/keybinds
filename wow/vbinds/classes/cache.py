@@ -6,6 +6,7 @@ vbinds - A simple data cache with file-system backing.
 # built-in
 from collections import defaultdict
 import json
+import logging
 import os
 import shutil
 from typing import Dict
@@ -16,6 +17,8 @@ from . import DEFAULT_CACHE
 
 class Cache:
     """ Class for storing dictionary data backed by JSON on disk. """
+
+    log = logging.getLogger(__name__)
 
     def __init__(self, cache_dir: str = DEFAULT_CACHE):
         """ Load an existing cache or construct a new one. """
@@ -33,6 +36,7 @@ class Cache:
             full_path = os.path.join(self.dir, "{}.json".format(key))
             with open(full_path, "w") as out_file:
                 out_file.write(json.dumps(data))
+        Cache.log.info("wrote cache to '%s'", self.dir)
 
     def load(self) -> None:
         """ Load each JSON file in the cache as data. """
@@ -48,6 +52,7 @@ class Cache:
         shutil.rmtree(self.dir)
         os.makedirs(self.dir)
         self.data = defaultdict(dict)
+        Cache.log.info("cleaned cache at '%s'", self.dir)
 
     def get(self, key: str) -> dict:
         """ Get an existing (or new) top-level key's data. """
