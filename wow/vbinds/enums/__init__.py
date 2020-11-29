@@ -44,3 +44,22 @@ def get_namespace_str(namespace: Namespace, region: Region):
     """ Get a fully-qualified namespace String. """
 
     return namespace.value.format(region)
+
+
+class IconSize(Enum):
+    """
+    Required parameter for retrieving in-game icons. See:
+    https://us.battle.net/forums/en/bnet/topic/20755767469
+    """
+
+    SMALL = 18
+    MEDIUM = 36
+    LARGE = 56
+
+
+def get_icon_url(name: str, size: IconSize):
+    """ Get the web-url for a named icon. """
+
+    file_name = "{}.jpg".format(name)
+    icon_url_fmt = "http://media.blizzard.com/wow/icons/{}/{}"
+    return icon_url_fmt.format(str(size.value), file_name)

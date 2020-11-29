@@ -4,7 +4,6 @@ vtools - Functions for downloading in-game icon image files.
 """
 
 # built-in
-from enum import Enum
 import os
 import logging
 from typing import Optional
@@ -12,26 +11,10 @@ from typing import Optional
 # third-party
 import requests
 
+# internal
+from vbinds.enums import IconSize, get_icon_url
+
 LOG = logging.getLogger(__name__)
-
-
-class IconSize(Enum):
-    """
-    Required parameter for retrieving in-game icons. See:
-    https://us.battle.net/forums/en/bnet/topic/20755767469
-    """
-
-    SMALL = 18
-    MEDIUM = 36
-    LARGE = 56
-
-
-def get_icon_url(name: str, size: IconSize):
-    """ Get the web-url for a named icon. """
-
-    file_name = "{}.jpg".format(name)
-    icon_url_fmt = "http://media.blizzard.com/wow/icons/{}/{}"
-    return icon_url_fmt.format(str(size.value), file_name)
 
 
 def get_icon(name: str, dest_root: str = ".",
