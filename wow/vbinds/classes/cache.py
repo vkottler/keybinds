@@ -24,8 +24,7 @@ class Cache:
         """ Load an existing cache or construct a new one. """
 
         self.dir = cache_dir
-        if not os.path.isdir(self.dir):
-            os.makedirs(self.dir)
+        os.makedirs(self.dir, exist_ok=True)
         self.data: Dict[str, dict] = defaultdict(dict)
         self.load()
 
