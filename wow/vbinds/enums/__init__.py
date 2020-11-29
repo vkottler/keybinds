@@ -20,6 +20,36 @@ class Region(Enum):
     CN = "cn"
 
 
+class Locale(Enum):
+    """
+    See "Region Host List" table at:
+    https://develop.battle.net/documentation/guides/regionality-partitions-and-localization
+    """
+
+    # US
+    en_US = "en_US"
+    es_MX = "es_MX"
+    pt_BR = "pt_BR"
+
+    # Europe
+    en_GB = "en_GB"
+    es_ES = "es_ES"
+    fr_FR = "fr_FR"
+    ru_RU = "ru_RU"
+    de_DE = "de_DE"
+    pt_PT = "pt_PT"
+    it_IT = "it_IT"
+
+    # Korea
+    ko_KR = "ko_KR"
+
+    # Taiwan
+    zh_TW = "zh_TW"
+
+    # China
+    zh_CN = "zh_CN"
+
+
 class Namespace(Enum):
     """
     See "World of Warcraft Namespaces" table at:
@@ -43,7 +73,7 @@ def get_query_str(region: Region, query_str: str) -> str:
 def get_namespace_str(namespace: Namespace, region: Region):
     """ Get a fully-qualified namespace String. """
 
-    return namespace.value.format(region)
+    return namespace.value.format(region.value)
 
 
 class IconSize(Enum):
