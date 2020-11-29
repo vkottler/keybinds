@@ -1,6 +1,6 @@
 
 """
-vtools - Functions for downloading in-game icon image files.
+vbinds - Functions for downloading in-game icon image files.
 """
 
 # built-in

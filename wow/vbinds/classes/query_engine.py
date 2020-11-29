@@ -5,6 +5,7 @@ vbinds - A game-data API query orchestrator.
 
 # built-in
 import logging
+import pprint
 from typing import Optional
 
 # third-party
@@ -32,10 +33,11 @@ class QueryEngine(TokenEngine):
 
         super().__init__(cache, region)
         self.locale = locale
+        self.printer = pprint.PrettyPrinter(indent=4)
 
     def raw_query(self, path: str, namespace: Namespace,
                   path_root: str = "data/wow",
-                  write_cache: bool = True) -> Optional[dict]:
+                  should_print: bool = False) -> Optional[dict]:
         """ Build a query for the game-data API and return the result. """
 
         namespace_str = get_namespace_str(namespace, self.region)
@@ -44,6 +46,9 @@ class QueryEngine(TokenEngine):
 
         # return cached result if we alredy have it
         if self.static_has(path):
+            QueryEngine.log.debug("cache hit for '%s'", full_path)
+            if should_print:
+                self.printer.pprint(namespace_data[full_path])
             return namespace_data[full_path]
 
         token_str = "BAD_TOKEN"
@@ -66,8 +71,9 @@ class QueryEngine(TokenEngine):
 
         # write the cached result
         namespace_data[full_path] = req.json()
-        if write_cache:
-            self.cache.save()
+        self.cache.save()
+        if should_print:
+            self.printer.pprint(namespace_data[full_path])
         return namespace_data[full_path]
 
     def static_has(self, path: str, path_root: str = "data/wow") -> bool:
@@ -78,7 +84,9 @@ class QueryEngine(TokenEngine):
         namespace_str = get_namespace_str(Namespace.Static, self.region)
         return "{}/{}".format(path_root, path) in self.cache.get(namespace_str)
 
-    def static_query(self, path: str) -> Optional[dict]:
+    def static_query(self, path: str,
+                     should_print: bool = False) -> Optional[dict]:
         """ Execute a query for static data. """
 
-        return self.raw_query(path, Namespace.Static)
+        return self.raw_query(path, Namespace.Static,
+                              should_print=should_print)

@@ -62,3 +62,4 @@ class IconCache:
                 icon_name = icon.replace(".jpg", "")
                 full_path = os.path.abspath(os.path.join(size_dir, icon))
                 data[icon_name] = full_path
+        IconCache.log.debug("loaded icon cache at '%s'", self.dir)

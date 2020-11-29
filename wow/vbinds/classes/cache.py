@@ -34,7 +34,7 @@ class Cache:
         for key, data in self.data.items():
             full_path = os.path.join(self.dir, "{}.json".format(key))
             with open(full_path, "w") as out_file:
-                out_file.write(json.dumps(data))
+                out_file.write(json.dumps(data, indent=4))
         Cache.log.info("wrote cache to '%s'", self.dir)
 
     def load(self) -> None:
@@ -44,6 +44,7 @@ class Cache:
             with open(os.path.join(self.dir, filename)) as in_file:
                 key = filename.replace(".json", "")
                 self.data[key] = json.loads(in_file.read())
+        Cache.log.debug("loaded cache at '%s'", self.dir)
 
     def clean(self) -> None:
         """ Delete the cahce on disk and reset data. """

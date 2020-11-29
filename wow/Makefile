@@ -1,4 +1,4 @@
-.PHONY: all venv clean
+.PHONY: all venv clean run run-help
 
 .DEFAULT_GOAL  := all
 PYTHON_VERSION := 3.8
@@ -33,6 +33,12 @@ host-coverage:
 	cd $($(PROJ)_DIR)/htmlcov && python$(PYTHON_VERSION) -m http.server 8080
 
 all: lint sa test todo
+
+run: $(VENV_CONC) check-env
+	@$(PYTHON_BIN)/python $($(PROJ)_DIR)/dev.py -o $(BUILD_DIR) -v
+
+run-help: $(VENV_CONC)
+	@$(PYTHON_BIN)/python $($(PROJ)_DIR)/dev.py -h
 
 todo:
 	-cd $($(PROJ)_DIR) && ack -i todo $(PROJ) tests

@@ -14,7 +14,7 @@ def test_engine_queries():
     """ Test query-engine calls. """
 
     engine = Engine(get_new_cache())
-    assert engine.get_classes() is not None
+    assert engine.get_classes(True) is not None
     assert engine.get_class(7) is not None
     assert engine.get_class_media(7) is not None
     assert engine.get_class_pvp_talent_slots(7) is not None
