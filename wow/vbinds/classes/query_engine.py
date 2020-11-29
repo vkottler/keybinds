@@ -60,7 +60,7 @@ class QueryEngine(TokenEngine):
 
         # make sure we got a valid response
         if req.status_code != requests.codes["ok"]:
-            TokenEngine.log.error("error querying '%s': %d %s", full_path,
+            QueryEngine.log.error("error querying '%s': %d %s", full_path,
                                   req.status_code, req.text)
             return None
 

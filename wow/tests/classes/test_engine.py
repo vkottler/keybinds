@@ -11,7 +11,7 @@ from vbinds.classes.engine import Engine
 
 
 def test_engine_queries():
-    """ TODO """
+    """ Test query-engine calls. """
 
     engine = Engine(get_new_cache())
     assert engine.get_classes() is not None
