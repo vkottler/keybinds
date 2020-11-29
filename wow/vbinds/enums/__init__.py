@@ -56,9 +56,9 @@ class Namespace(Enum):
     https://develop.battle.net/documentation/guides/game-data-apis-wow-namespaces
     """
 
-    Static = "static-{0}"
-    Dynamic = "dynamic-{0}"
-    Profile = "profile-{0}"
+    Static = "static-{}"
+    Dynamic = "dynamic-{}"
+    Profile = "profile-{}"
 
 
 def get_query_str(region: Region, query_str: str) -> str:
