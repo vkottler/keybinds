@@ -18,4 +18,5 @@ def test_engine_queries():
     assert engine.get_class(7) is not None
     assert engine.get_class_media(7) is not None
     assert engine.get_class_pvp_talent_slots(7) is not None
+    assert engine.get_specs() is not None
     engine.cache.clean()

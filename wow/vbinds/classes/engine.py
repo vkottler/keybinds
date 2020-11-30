@@ -10,9 +10,10 @@ import os
 from . import DEFAULT_CACHE
 from .cache import Cache
 from .class_data_engine import ClassDataEngine
+from .spec_data_engine import SpecDataEngine
 
 
-class Engine(ClassDataEngine):
+class Engine(ClassDataEngine, SpecDataEngine):
     """ Doesn't implement anything, just aggregates functionality. """
 
 

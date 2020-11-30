@@ -46,6 +46,7 @@ def main(argv: List[str]) -> int:
         if classes is not None:
             for class_data in classes:
                 engine.get_class(class_data["id"], True)
+        engine.get_specs(True)
 
     except SystemExit as exc:
         result = 1
