@@ -34,6 +34,7 @@ class QueryEngine(TokenEngine):
         super().__init__(cache, region)
         self.locale = locale
         self.printer = pprint.PrettyPrinter(indent=4)
+        self.has_missed = False
 
     def raw_query(self, path: str, namespace: Namespace,
                   path_root: str = "data/wow",
@@ -50,6 +51,7 @@ class QueryEngine(TokenEngine):
             if should_print:
                 self.printer.pprint(namespace_data[full_path])
             return namespace_data[full_path]
+        self.has_missed = True
 
         token_str = "BAD_TOKEN"
         token = self.get_token()
@@ -71,10 +73,15 @@ class QueryEngine(TokenEngine):
 
         # write the cached result
         namespace_data[full_path] = req.json()
-        self.cache.save()
         if should_print:
             self.printer.pprint(namespace_data[full_path])
         return namespace_data[full_path]
+
+    def save(self) -> None:
+        """ Write the cache based on current data. """
+
+        if self.has_missed:
+            self.cache.save()
 
     def static_has(self, path: str, path_root: str = "data/wow") -> bool:
         """

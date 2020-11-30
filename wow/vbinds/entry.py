@@ -12,6 +12,7 @@ from typing import List
 # internal
 from vbinds.classes.icon_cache import IconCache
 from vbinds.classes.engine import engine_from_output_root
+from vbinds.classes.playable_class import get_classes
 from . import DESCRIPTION
 
 
@@ -41,13 +42,14 @@ def main(argv: List[str]) -> int:
         engine = engine_from_output_root(args.out_dir)
 
         icon_cache.get("spell_frost_frostshock")
+        icon_cache.get("spell_nature_lightning")
 
-        classes = engine.get_classes()
-        if classes is not None:
-            for class_data in classes:
-                engine.get_class(class_data["id"], True)
-        engine.get_specs(True)
+        classes = get_classes(engine)
+        for class_data in classes:
+            print(class_data)
+            print(class_data.roles())
 
+        engine.save()
     except SystemExit as exc:
         result = 1
         if exc.code is not None:
