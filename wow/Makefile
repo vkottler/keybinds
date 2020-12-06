@@ -20,7 +20,6 @@ sa: $(PY_PREFIX)sa
 test: check-env $(PY_PREFIX)test
 view: $(PY_PREFIX)view
 host-coverage: $(PY_PREFIX)host-coverage
-	cd $($(PROJ)_DIR)/htmlcov && python$(PYTHON_VERSION) -m http.server 8080
 
 all: lint sa test todo
 
