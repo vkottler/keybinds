@@ -1,3 +1,6 @@
 [submodule "wow/mk"]
 	path = wow/mk
-	url = git@github.com:vkottler/mk.git
+	url = https://github.com/vkottler/mk.git
+[submodule "wow/keybinds"]
+	path = wow/keybinds
+	url = https://github.com/vkottler/keybinds.git
