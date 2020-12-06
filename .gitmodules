@@ -1,0 +1,3 @@
+[submodule "wow/mk"]
+	path = wow/mk
+	url = git@github.com:vkottler/mk.git

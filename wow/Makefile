@@ -1,35 +1,25 @@
 .PHONY: all venv clean run run-help
 
 .DEFAULT_GOAL  := all
-PYTHON_VERSION := 3.8
 PROJ           := vbinds
-$(PROJ)_DIR    := .
-BUILD_DIR      := $($(PROJ)_DIR)/build
-VENV_NAME      := venv$(PYTHON_VERSION)
-VENV_DIR       := $($(PROJ)_DIR)/$(VENV_NAME)
-PYTHON_BIN     := $(VENV_DIR)/bin
+$(PROJ)_DIR    := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+BUILD_DIR_NAME := build
+BUILD_DIR      := $($(PROJ)_DIR)/$(BUILD_DIR_NAME)
 
 include $($(PROJ)_DIR)/mk/functions.mk
-include $($(PROJ)_DIR)/mk/virtualenv.mk
-include $($(PROJ)_DIR)/mk/env.mk
+include $($(PROJ)_DIR)/env.mk
+include $($(PROJ)_DIR)/mk/venv.mk
+include $($(PROJ)_DIR)/mk/python.mk
 
 $(BUILD_DIR):
-	@mkdir -p $@/$(VENV_NAME)
+	@mkdir -p $@
 
-lint-%: $(VENV_CONC) check-env
-	$(PYTHON_BIN)/$* $(PROJ) tests
-
-lint: lint-flake8 lint-pylint
-
-sa: lint-mypy
-
-test: $(VENV_CONC) check-env
-	$(PYTHON_BIN)/pytest -x --log-cli-level=10 --cov=$(PROJ) --cov-report html
-
-view:
-	@$(BROWSER) htmlcov/index.html
-
-host-coverage:
+PY_EXTRA_LINT_ARGS := $($(PROJ)_DIR)/dev.py
+lint: $(PY_PREFIX)lint
+sa: $(PY_PREFIX)sa
+test: check-env $(PY_PREFIX)test
+view: $(PY_PREFIX)view
+host-coverage: $(PY_PREFIX)host-coverage
 	cd $($(PROJ)_DIR)/htmlcov && python$(PYTHON_VERSION) -m http.server 8080
 
 all: lint sa test todo
@@ -43,10 +33,5 @@ run-help: $(VENV_CONC)
 todo:
 	-cd $($(PROJ)_DIR) && ack -i todo $(PROJ) tests
 
-clean:
-	@find -iname '*.pyc' -delete
-	@find -iname '__pycache__' -delete
-	@rm -rf $(BUILD_DIR) $($(PROJ)_DIR)/.vbinds_cache $($(PROJ)_DIR)/.mypy_cache
-	@rm -rf $($(PROJ)_DIR)/cover $($(PROJ)_DIR)/.coverage dist \
-		$($(PROJ)_DIR)/*.egg-info $($(PROJ)_DIR)/htmlcov \
-		$($(PROJ)_DIR)/.pytest_cache
+clean: $(PY_PREFIX)clean
+	@rm -rf $(BUILD_DIR) $($(PROJ)_DIR)/.vbinds_cache
