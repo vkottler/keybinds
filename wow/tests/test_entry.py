@@ -21,3 +21,4 @@ def test_main_basic():
         base_args = ["program", "-o", tmp_dir]
         assert main(base_args) == 0
         assert main(base_args + ["-v"]) == 0
+        assert main(base_args + ["--version"]) == 0

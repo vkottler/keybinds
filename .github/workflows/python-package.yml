@@ -42,3 +42,6 @@ jobs:
     - name: test
       run: |
         make -C wow PYTHON_VERSION=${{matrix.python-version}} test
+    - name: dist
+      run: |
+        make -C wow PYTHON_VERSION=${{matrix.python-version}} dist

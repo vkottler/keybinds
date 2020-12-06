@@ -10,16 +10,19 @@ include $($(PROJ)_DIR)/mk/functions.mk
 include $($(PROJ)_DIR)/env.mk
 include $($(PROJ)_DIR)/mk/venv.mk
 include $($(PROJ)_DIR)/mk/python.mk
+include $($(PROJ)_DIR)/mk/pypi.mk
 
 $(BUILD_DIR):
 	@mkdir -p $@
 
-PY_EXTRA_LINT_ARGS := $($(PROJ)_DIR)/dev.py
+PY_EXTRA_LINT_ARGS := $($(PROJ)_DIR)/dev.py $($(PROJ)_DIR)/setup.py
 lint: $(PY_PREFIX)lint
 sa: $(PY_PREFIX)sa
 test: check-env $(PY_PREFIX)test
+upload: check-env $(PYPI_PREFIX)upload
 view: $(PY_PREFIX)view
 host-coverage: $(PY_PREFIX)host-coverage
+dist: $(PY_PREFIX)dist
 
 all: lint sa test todo
 

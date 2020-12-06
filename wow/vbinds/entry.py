@@ -7,28 +7,36 @@ vbinds - Package's command-line entry-point.
 import argparse
 import logging
 import os
+import sys
 from typing import List
 
 # internal
 from vbinds.classes.icon_cache import IconCache
 from vbinds.classes.engine import engine_from_output_root
 from vbinds.classes.playable_class import get_classes
-from . import DESCRIPTION
+from . import DESCRIPTION, VERSION
 
 
-def main(argv: List[str]) -> int:
+def main(argv: List[str] = None) -> int:
     """ Program entry-point. """
 
     result = 0
 
+    # fall back on command-line arguments
+    command_args = sys.argv
+    if argv is not None:
+        command_args = argv
+
     parser = argparse.ArgumentParser(description=DESCRIPTION)
+    parser.add_argument("--version", action="version",
+                        version="%(prog)s {0}".format(VERSION))
     parser.add_argument("-v", "--verbose", action="store_true",
                         help="set to increase logging verbosity")
     parser.add_argument("-o", "--out-dir", default=os.getcwd(),
                         help="root directory for program outputs")
 
     try:
-        args = parser.parse_args(argv[1:])
+        args = parser.parse_args(command_args[1:])
         args.out_dir = os.path.abspath(args.out_dir)
 
         # initialize logging
