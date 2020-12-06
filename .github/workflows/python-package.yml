@@ -29,6 +29,9 @@ jobs:
         SECRETHUB_CREDENTIAL: ${{ secrets.SECRETHUB_CREDENTIAL }}
         BLIZZ_API_ID: secrethub://vdoer/keybinds/blizzard/id
         BLIZZ_API_SECRET: secrethub://vdoer/keybinds/blizzard/secret
+    - name: submodule
+      run: |
+        git submodule update --init --recursive
     - name: venv
       run: |
         make -C wow PYTHON_VERSION=${{matrix.python-version}} venv
