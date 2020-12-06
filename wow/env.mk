@@ -13,4 +13,3 @@ endif
 ifndef BLIZZ_API_SECRET
 	$(error BLIZZ_API_SECRET not set, run 'source $($(PROJ)_DIR)/.secrets')
 endif
-	@git submodule update --init --recursive
