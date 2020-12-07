@@ -10,6 +10,6 @@ dist
 htmlcov
 .secrets
 icons
-.pypi.env
+.*.env
 .manifest_cache
 datazen-out

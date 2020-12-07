@@ -3,20 +3,11 @@
 .DEFAULT_GOAL  := all
 PROJ           := vbinds
 $(PROJ)_DIR    := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
-BUILD_DIR_NAME := build
-BUILD_DIR      := $($(PROJ)_DIR)/$(BUILD_DIR_NAME)
-
-include $($(PROJ)_DIR)/mk/functions.mk
-include $($(PROJ)_DIR)/env.mk
-include $($(PROJ)_DIR)/mk/venv.mk
-include $($(PROJ)_DIR)/mk/python.mk
-include $($(PROJ)_DIR)/mk/pypi.mk
-include $($(PROJ)_DIR)/mk/datazen.mk
-
-$(BUILD_DIR):
-	@mkdir -p $@
 
 PY_EXTRA_LINT_ARGS := $($(PROJ)_DIR)/dev.py $($(PROJ)_DIR)/setup.py
+include $($(PROJ)_DIR)/mk/conf.mk
+include $($(PROJ)_DIR)/env.mk
+
 lint: $(PY_PREFIX)lint
 sa: $(PY_PREFIX)sa
 test: check-env $(PY_PREFIX)test
