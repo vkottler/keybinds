@@ -2,11 +2,17 @@ default_target: "groups-all"
 
 configs:
 - "config/configs"
-- "configs_local"
+- "local/configs"
+
+schemas:
+- "config/schemas"
 
 templates:
 - "config/templates"
-- "templates_local"
+- "local/templates"
+
+variables:
+- "local/variables"
 
 renders:
 - name: "__init__.py"
