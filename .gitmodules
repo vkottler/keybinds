@@ -4,3 +4,6 @@
 [submodule "wow/keybinds"]
 	path = wow/keybinds
 	url = https://github.com/vkottler/keybinds.git
+[submodule "wow/config"]
+	path = wow/config
+	url = https://github.com/vkottler/config.git

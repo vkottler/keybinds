@@ -1,0 +1,24 @@
+default_target: "groups-all"
+
+configs:
+- "config/configs"
+- "configs_local"
+
+templates:
+- "config/templates"
+- "templates_local"
+
+renders:
+- name: "__init__.py"
+  output_dir: "vbinds"
+- name: "README.md"
+  output_dir: "."
+- name: "setup.py"
+  output_dir: "."
+
+groups:
+- name: "all"
+  dependencies:
+  - "renders-__init__.py"
+  - "renders-README.md"
+  - "renders-setup.py"

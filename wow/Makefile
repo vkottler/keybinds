@@ -11,6 +11,7 @@ include $($(PROJ)_DIR)/env.mk
 include $($(PROJ)_DIR)/mk/venv.mk
 include $($(PROJ)_DIR)/mk/python.mk
 include $($(PROJ)_DIR)/mk/pypi.mk
+include $($(PROJ)_DIR)/mk/datazen.mk
 
 $(BUILD_DIR):
 	@mkdir -p $@

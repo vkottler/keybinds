@@ -11,3 +11,5 @@ htmlcov
 .secrets
 icons
 .pypi.env
+.manifest_cache
+datazen-out

@@ -1,0 +1,7 @@
+name: vbinds
+pypi_name: blizzard-api
+version: 0.2.1
+description: "Interact with Blizard's game-data API."
+setup_args:
+- url_override="https://github.com/vkottler/keybinds/tree/master/wow"
+- console_overrides=["bapi=vbinds.entry:main"]
