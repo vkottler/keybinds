@@ -1,3 +1,8 @@
+# =====================================
+# generator=datazen
+# version=1.0.11
+# hash=dfc0ae3718ff37150a473d4c2ffda363
+# =====================================
 
 """
 vbinds - Useful defaults and other package metadata.
