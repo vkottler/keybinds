@@ -1,30 +1,26 @@
 default_target: "groups-all"
 
+params:
+  project: "vbinds"
+
+includes:
+- "config/includes/python.yaml"
+
 configs:
-- "config/configs"
 - "local/configs"
 
-schemas:
-- "config/schemas"
-
 templates:
-- "config/templates"
 - "local/templates"
 
 variables:
 - "local/variables"
 
 renders:
-- name: "__init__.py"
-  output_dir: "vbinds"
 - name: "README.md"
-  output_dir: "."
-- name: "setup.py"
   output_dir: "."
 
 groups:
 - name: "all"
   dependencies:
-  - "renders-__init__.py"
   - "renders-README.md"
-  - "renders-setup.py"
+  - "groups-python"

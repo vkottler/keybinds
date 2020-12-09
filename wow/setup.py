@@ -1,16 +1,18 @@
 # =====================================
 # generator=datazen
-# version=1.0.11
-# hash=ddec513fc69ad08ef19b9e4817234c4e
+# version=1.1.1
+# hash=57b1ce2b72ca3267d6c18f6f8b25a5e7
 # =====================================
 
 """
 vbinds - Package definition for distribution.
 """
 
+# third-party
+from vmklib.setup import setup  # type: ignore
+
 # internal
 from vbinds import PKG_NAME, VERSION, DESCRIPTION
-from mk.setup import setup
 
 
 author_info = {"name": "Vaughn Kottler",

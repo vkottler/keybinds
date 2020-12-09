@@ -30,18 +30,21 @@ jobs:
         SECRETHUB_CREDENTIAL: ${{ secrets.SECRETHUB_CREDENTIAL }}
         BLIZZ_API_ID: secrethub://vdoer/keybinds/blizzard/id
         BLIZZ_API_SECRET: secrethub://vdoer/keybinds/blizzard/secret
+    - name: install-mk
+      run: |
+        pip${{matrix.python-version}} install vmklib
     - name: venv
       run: |
-        make -C wow PYTHON_VERSION=${{matrix.python-version}} venv
+        mk -C wow -P vbinds PYTHON_VERSION=${{matrix.python-version}} venv
     - name: lint
       run: |
-        make -C wow PYTHON_VERSION=${{matrix.python-version}} lint
+        mk -C wow -P vbinds PYTHON_VERSION=${{matrix.python-version}} lint
     - name: sa
       run: |
-        make -C wow PYTHON_VERSION=${{matrix.python-version}} sa
+        mk -C wow -P vbinds PYTHON_VERSION=${{matrix.python-version}} sa
     - name: test
       run: |
-        make -C wow PYTHON_VERSION=${{matrix.python-version}} test
+        mk -C wow -P vbinds PYTHON_VERSION=${{matrix.python-version}} test
     - name: dist
       run: |
-        make -C wow PYTHON_VERSION=${{matrix.python-version}} dist
+        mk -C wow -P vbinds PYTHON_VERSION=${{matrix.python-version}} dist

@@ -1,11 +1,8 @@
 .PHONY: all venv clean run run-help
 
 .DEFAULT_GOAL  := all
-PROJ           := vbinds
-$(PROJ)_DIR    := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
 PY_EXTRA_LINT_ARGS := $($(PROJ)_DIR)/dev.py $($(PROJ)_DIR)/setup.py
-include $($(PROJ)_DIR)/mk/conf.mk
 include $($(PROJ)_DIR)/env.mk
 
 lint: $(PY_PREFIX)lint

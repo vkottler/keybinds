@@ -1,6 +1,2 @@
-pylint
-flake8
-pytest
-pytest-cov
-mypy
 datazen
+vmklib
