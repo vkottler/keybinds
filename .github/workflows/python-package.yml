@@ -32,7 +32,7 @@ jobs:
         BLIZZ_API_SECRET: secrethub://vdoer/keybinds/blizzard/secret
     - name: install-mk
       run: |
-        pip${{matrix.python-version}} install vmklib
+        pip${{matrix.python-version}} install --upgrade vmklib
     - name: venv
       run: |
         mk -C wow -P vbinds PYTHON_VERSION=${{matrix.python-version}} venv
