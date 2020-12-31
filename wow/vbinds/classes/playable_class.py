@@ -5,7 +5,7 @@ vbinds - An interface for working with a playable class.
 
 # built-in
 import os
-from typing import List
+from typing import List, Dict
 
 # internal
 from .engine import Engine
@@ -30,6 +30,8 @@ class PlayableClass:
             spec = Specialization(self.engine, spec_idx_data["id"])
             self.specs[spec_idx_data["name"]] = spec
 
+        self.name = self.data["name"]
+
     def roles(self) -> List[str]:
         """ Get the list of roles this class can fulfill. """
 
@@ -40,13 +42,23 @@ class PlayableClass:
                 role_list.append(role)
         return role_list
 
+    def macros(self) -> Dict[str, List[str]]:
+        """ Collect all of the talent macros for this class. """
+
+        result: Dict[str, List[str]] = {}
+        for spec in self.specs.values():
+            result[spec.name] = []
+            for macro in spec.macros.values():
+                result[spec.name].append(macro)
+        return result
+
     def __str__(self) -> str:
         """ Turn the class into a String for debugging. """
 
         assert self.data is not None
         border = "****************************************"
-        name_border = "=" * len(self.data["name"])
-        lines = [border, name_border, self.data["name"], name_border]
+        name_border = "=" * len(self.name)
+        lines = [border, name_border, self.name, name_border]
         for spec in self.specs.values():
             lines.append(str(spec))
         lines.append(border)

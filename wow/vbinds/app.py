@@ -26,9 +26,16 @@ def entry(args: argparse.Namespace) -> int:
     icon_cache.get("spell_nature_lightning")
 
     classes = get_classes(engine)
+    print("----------------------------------------")
     for class_data in classes:
-        print(class_data)
-        print(class_data.roles())
+        print(class_data.name)
+        print("========================================")
+        macro_data = class_data.macros()
+        for spec, macros in macro_data.items():
+            print(spec)
+            for macro in macros:
+                print(macro)
+        print("----------------------------------------")
 
     engine.save()
 
