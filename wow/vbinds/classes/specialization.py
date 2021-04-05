@@ -9,6 +9,7 @@ from typing import Optional
 
 # internal
 from .engine import Engine
+from .talent import Talent
 
 
 def level_to_index(level: int) -> int:
@@ -26,6 +27,12 @@ def level_to_index(level: int) -> int:
     return level_data[level]
 
 
+def is_talent_active(talent_data: dict) -> bool:
+    """ Determine if a talent is active or passive, based on the API data. """
+
+    return talent_data["spell_tooltip"]["cast_time"].lower() != "passive"
+
+
 def build_row_macro(row_idx: int, row_data: dict) -> Optional[str]:
     """
     For a given talent row, build a macro to arbitrate non-passive abilities
@@ -36,7 +43,7 @@ def build_row_macro(row_idx: int, row_data: dict) -> Optional[str]:
     non_passives = []
 
     for idx, data in row_data.items():
-        if data["raw"]["spell_tooltip"]["cast_time"].lower() != "passive":
+        if is_talent_active(data["raw"]):
             non_passives.append((data["raw"]["talent"]["name"], idx))
 
     if len(non_passives) > 1:
@@ -44,10 +51,12 @@ def build_row_macro(row_idx: int, row_data: dict) -> Optional[str]:
         for ability in non_passives:
             val += "[talent:{}/{}] {}; ".format(row_idx, ability[1],
                                                 ability[0])
+        val = val.rstrip()
 
     return val
 
 
+# pylint: disable=too-many-locals
 class Specialization:
     """ An interface for working with spec data. """
 
@@ -60,21 +69,24 @@ class Specialization:
 
         # build the talent rows
         self.talent_rows = {}
+        self.levels = {}
         for tier_data in self.data["talent_tiers"]:
             # store talents as one-indexed
             talent_row = {}
             for talent_data in tier_data["talents"]:
-                talent_index = talent_data["column_index"] + 1
                 ttip = talent_data["spell_tooltip"]
                 f_str = "({}, {}) {}".format(talent_data["talent"]["name"],
                                              ttip["cast_time"],
                                              ttip["description"])
-                row_data = {"text": f_str, "raw": talent_data}
-                talent_row[talent_index] = row_data
+                talent_row[talent_data["column_index"] + 1] = {
+                    "text": f_str,
+                    "raw": talent_data
+                }
 
             # save tiers as one-indexed
             index = level_to_index(tier_data["level"])
             self.talent_rows[index] = talent_row
+            self.levels[index] = tier_data["level"]
 
         # store this spec's talent macros
         self.macros = {}
@@ -84,6 +96,31 @@ class Specialization:
                 self.macros[row_idx] = macro
 
         self.name = self.data["name"]
+
+        # build a data structure for serialization
+        media = engine.get_spec_media(spec_id)
+        assert media is not None
+        self.to_serialize = {
+            "icon": media["assets"][0]["value"],
+            "name": self.name,
+            "role": self.data["role"]["name"],
+        }
+        self.to_serialize["talent_rows"] = []
+        for row, data in self.talent_rows.items():
+            rdata: dict = {
+                "index": row,
+                "level": self.levels[row],
+                "macro": None,
+            }
+            if row in self.macros:
+                rdata["macro"] = self.macros[row]
+            rdata["talents"] = {}
+            for talent_idx, talent_data in data.items():
+                tdata = Talent(self.engine,
+                               talent_data["raw"]["talent"]["id"]).to_serialize
+                tdata["active"] = is_talent_active(talent_data["raw"])
+                rdata["talents"][talent_idx] = tdata
+            self.to_serialize["talent_rows"].append(rdata)
 
     def role(self) -> str:
         """

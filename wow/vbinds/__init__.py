@@ -1,7 +1,7 @@
 # =====================================
 # generator=datazen
-# version=1.3.1
-# hash=c1e397072edb6aac850539c81e605979
+# version=1.6.7
+# hash=8014025c88e39772f199eecaf4397d22
 # =====================================
 
 """
@@ -9,5 +9,5 @@ vbinds - Useful defaults and other package metadata.
 """
 
 PKG_NAME = "blizzard-api"
-VERSION = "0.2.4"
+VERSION = "0.3.0"
 DESCRIPTION = "Interact with Blizard's game-data API."

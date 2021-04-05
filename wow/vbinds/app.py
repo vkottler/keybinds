@@ -6,6 +6,7 @@ vbinds - This package's command-line entry-point application.
 # built-in
 import argparse
 import os
+import json
 
 # internal
 from vbinds.classes.icon_cache import IconCache
@@ -26,19 +27,15 @@ def entry(args: argparse.Namespace) -> int:
     icon_cache.get("spell_nature_lightning")
 
     classes = get_classes(engine)
-    print("----------------------------------------")
-    for class_data in classes:
-        print(class_data.name)
-        print("========================================")
-        macro_data = class_data.macros()
-        for spec, macros in macro_data.items():
-            print(spec)
-            for macro in macros:
-                print(macro)
-        print("----------------------------------------")
+    for class_name, data in classes.items():
+        filename = os.path.join(args.out_dir,
+                                (class_name + ".json").replace(" ", "_"))
+        with open(filename, "w") as outfile:
+            indent = None if not args.indent else args.indent
+            outfile.write(json.dumps(data.to_serialize, indent=indent))
+        print(data)
 
     engine.save()
-
     return 0
 
 
@@ -47,3 +44,5 @@ def add_app_args(parser: argparse.ArgumentParser) -> None:
 
     parser.add_argument("-o", "--out-dir", default=os.getcwd(),
                         help="root directory for program outputs")
+    parser.add_argument("-i", "--indent", default=0, type=int,
+                        help="indent argument for json serialization")

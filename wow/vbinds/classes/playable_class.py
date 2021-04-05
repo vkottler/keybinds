@@ -22,15 +22,23 @@ class PlayableClass:
 
         # initialize base-class data
         self.data = engine.get_class(class_id)
+        self.media = engine.get_class_media(class_id)
         assert self.data is not None
+        assert self.media is not None
+        self.icon = self.media["assets"][0]["value"]
+
+        self.name = self.data["name"]
+        self.to_serialize = {"name": self.name, "icon": self.icon}
 
         # initialize specialization data
         self.specs = {}
         for spec_idx_data in self.data["specializations"]:
             spec = Specialization(self.engine, spec_idx_data["id"])
-            self.specs[spec_idx_data["name"]] = spec
+            self.specs[spec_idx_data["name"].lower()] = spec
 
-        self.name = self.data["name"]
+        self.to_serialize["specs"] = []
+        for spec in self.specs.values():
+            self.to_serialize["specs"].append(spec.to_serialize)
 
     def roles(self) -> List[str]:
         """ Get the list of roles this class can fulfill. """
@@ -65,13 +73,14 @@ class PlayableClass:
         return os.linesep.join(lines)
 
 
-def get_classes(engine: Engine) -> List[PlayableClass]:
+def get_classes(engine: Engine) -> Dict[str, PlayableClass]:
     """ Using the query engine, get a list of all playable-class objects. """
 
     classes = engine.get_classes()
     assert classes is not None
 
-    class_objs = []
+    class_objs = {}
     for class_idx_data in classes:
-        class_objs.append(PlayableClass(engine, class_idx_data["id"]))
+        class_data = PlayableClass(engine, class_idx_data["id"])
+        class_objs[class_data.name.lower()] = class_data
     return class_objs

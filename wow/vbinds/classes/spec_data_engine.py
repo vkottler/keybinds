@@ -25,6 +25,13 @@ class SpecDataEngine(QueryEngine):
         q_str = "playable-specialization/{}".format(str(spec_id))
         return self.static_query(q_str, should_print)
 
+    def get_spec_media(self, spec_id: int,
+                       should_print: bool = False) -> Optional[dict]:
+        """ Exposes the 'Playable Specializations Media' API call. """
+
+        q_str = "media/playable-specialization/{}".format(str(spec_id))
+        return self.static_query(q_str, should_print)
+
     def get_talents(self, should_print: bool = False) -> Optional[dict]:
         """ Exposes the 'Talents Index' API call. """
 
@@ -35,6 +42,13 @@ class SpecDataEngine(QueryEngine):
         """ Exposes the 'Spell' API call. """
 
         return self.static_query("spell/{}".format(str(spell_id)),
+                                 should_print)
+
+    def get_spell_media(self, spell_id: int,
+                        should_print: bool = False) -> Optional[dict]:
+        """ Exposes the 'Spell Media' API call. """
+
+        return self.static_query("media/spell/{}".format(str(spell_id)),
                                  should_print)
 
     def get_talent(self, talent_id: int,

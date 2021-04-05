@@ -11,5 +11,5 @@ htmlcov
 .secrets
 icons
 .*.env
-.manifest_cache
+.*_cache
 datazen-out

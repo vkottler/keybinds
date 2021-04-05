@@ -20,6 +20,7 @@ class Region(Enum):
     CN = "cn"
 
 
+# pylint: disable=invalid-name
 class Locale(Enum):
     """
     See "Region Host List" table at:

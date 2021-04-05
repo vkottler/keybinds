@@ -15,6 +15,13 @@ class Spell:
 
         self.engine = engine
         self.data = engine.get_spell(spell_id)
+        self.media = engine.get_spell_media(spell_id)
+
+        # build a data structure for serialization
+        assert self.data is not None
+        assert self.media is not None
+        self.to_serialize = {"name": self.data["name"],
+                             "icon": self.media["assets"][0]["value"]}
 
     def name(self) -> str:
         """ Get this spell's name. """
@@ -40,6 +47,11 @@ class Talent:
         self.data = engine.get_talent(talent_id)
         assert self.data is not None
         self.spell = Spell(self.engine, self.data["spell"]["id"])
+
+        # build a data structure for serialization
+        self.to_serialize = {"name": self.spell.name(),
+                             "description": self.data["description"],
+                             "icon": self.spell.to_serialize["icon"]}
 
     def name(self) -> str:
         """ Get this talent's name. """
