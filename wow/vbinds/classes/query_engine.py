@@ -25,7 +25,7 @@ class QueryEngine(TokenEngine):
     log = logging.getLogger(__name__)
 
     def __init__(self, cache: Cache, region: Region = Region.US,
-                 locale: Locale = Locale.en_US):
+                 locale: Locale = Locale.en_US, tries: int = 3):
         """
         Build a query engine from a given cache, for a specific region and
         locale.
@@ -35,6 +35,7 @@ class QueryEngine(TokenEngine):
         self.locale = locale
         self.printer = pprint.PrettyPrinter(indent=4)
         self.has_missed = False
+        self.tries = tries
 
     def raw_query(self, path: str, namespace: Namespace,
                   path_root: str = "data/wow",
@@ -63,7 +64,12 @@ class QueryEngine(TokenEngine):
                 "namespace": namespace_str}
         query_str = get_query_str(self.region, full_path)
         QueryEngine.log.debug("query: '%s'", query_str)
-        req = requests.get(query_str, params=args)
+
+        # make a few attempts at the query
+        for _ in range(self.tries):
+            req = requests.get(query_str, params=args)
+            if req.status_code == requests.codes["ok"]:
+                break
 
         # make sure we got a valid response
         if req.status_code != requests.codes["ok"]:
