@@ -105,7 +105,9 @@ class Specialization:
         self.to_serialize = {
             "icon": media["assets"][0]["value"],
             "name": self.name,
+            "slug": self.name.lower().replace(" ", "_"),
             "role": self.data["role"]["name"],
+            "has_macros": bool(self.macros),
         }
         self.to_serialize["talent_rows"] = []
         for row, data in self.talent_rows.items():

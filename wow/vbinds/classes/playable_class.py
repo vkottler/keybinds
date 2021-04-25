@@ -28,7 +28,11 @@ class PlayableClass:
         self.icon = self.media["assets"][0]["value"]
 
         self.name = self.data["name"]
-        self.to_serialize = {"name": self.name, "icon": self.icon}
+        self.to_serialize = {
+            "name": self.name,
+            "slug": self.name.lower().replace(" ", "_"),
+            "icon": self.icon,
+        }
 
         # initialize specialization data
         self.specs = {}
@@ -82,5 +86,5 @@ def get_classes(engine: Engine) -> Dict[str, PlayableClass]:
     class_objs = {}
     for class_idx_data in classes:
         class_data = PlayableClass(engine, class_idx_data["id"])
-        class_objs[class_data.name.lower()] = class_data
+        class_objs[class_data.to_serialize["slug"]] = class_data
     return class_objs

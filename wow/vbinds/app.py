@@ -28,8 +28,7 @@ def entry(args: argparse.Namespace) -> int:
 
     classes = get_classes(engine)
     for class_name, data in classes.items():
-        filename = os.path.join(args.out_dir,
-                                (class_name + ".json").replace(" ", "_"))
+        filename = os.path.join(args.out_dir, class_name + ".json")
         with open(filename, "w") as outfile:
             indent = None if not args.indent else args.indent
             outfile.write(json.dumps(data.to_serialize, indent=indent))
