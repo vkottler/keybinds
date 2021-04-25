@@ -5,7 +5,7 @@ vbinds - An interface for working with a playable specializations.
 
 # built-in
 import os
-from typing import Optional
+from typing import Optional, Tuple, List
 
 # internal
 from .engine import Engine
@@ -33,7 +33,8 @@ def is_talent_active(talent_data: dict) -> bool:
     return talent_data["spell_tooltip"]["cast_time"].lower() != "passive"
 
 
-def build_row_macro(row_idx: int, row_data: dict) -> Optional[str]:
+def build_row_macro(row_idx: int,
+                    row_data: dict) -> Optional[Tuple[str, List[str]]]:
     """
     For a given talent row, build a macro to arbitrate non-passive abilities
     if applicable.
@@ -47,11 +48,12 @@ def build_row_macro(row_idx: int, row_data: dict) -> Optional[str]:
             non_passives.append((data["raw"]["talent"]["name"], idx))
 
     if len(non_passives) > 1:
-        val = "#showtooltip{}/cast ".format(os.linesep)
+        strval = "#showtooltip{}/cast ".format(os.linesep)
         for ability in non_passives:
-            val += "[talent:{}/{}] {}; ".format(row_idx, ability[1],
-                                                ability[0])
-        val = val.rstrip()
+            strval += "[talent:{}/{}] {}; ".format(row_idx, ability[1],
+                                                   ability[0])
+        strval = strval.rstrip()
+        val = strval, strval.split(os.linesep)
 
     return val
 
@@ -113,7 +115,8 @@ class Specialization:
                 "macro": None,
             }
             if row in self.macros:
-                rdata["macro"] = self.macros[row]
+                rdata["macro"] = self.macros[row][0]
+                rdata["macro_lines"] = self.macros[row][1]
             rdata["talents"] = {}
             for talent_idx, talent_data in data.items():
                 tdata = Talent(self.engine,
@@ -147,6 +150,6 @@ class Specialization:
             macro = build_row_macro(row_idx, row_data)
             if macro is not None:
                 lines.append("macro:")
-                lines.append(macro)
+                lines.append(macro[0])
 
         return os.linesep.join(lines)

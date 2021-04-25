@@ -57,7 +57,7 @@ class PlayableClass:
         for spec in self.specs.values():
             result[spec.name] = []
             for macro in spec.macros.values():
-                result[spec.name].append(macro)
+                result[spec.name].append(macro[0])
         return result
 
     def __str__(self) -> str:
