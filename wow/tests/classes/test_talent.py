@@ -1,4 +1,3 @@
-
 """
 vbinds - Tests talent and spell classes.
 """
@@ -12,7 +11,7 @@ from vbinds.classes.talent import Talent, Spell
 
 
 def test_talent_basic():
-    """ Test that a talent can be loaded. """
+    """Test that a talent can be loaded."""
 
     engine = Engine(get_new_cache())
     talent = Talent(engine, 23106)
@@ -22,7 +21,7 @@ def test_talent_basic():
 
 
 def test_spell_basic():
-    """ Test that a spell can be loaded. """
+    """Test that a spell can be loaded."""
 
     engine = Engine(get_new_cache())
     spell = Spell(engine, 263642)

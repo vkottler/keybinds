@@ -1,4 +1,3 @@
-
 """
 vbinds - Functions for downloading in-game icon image files.
 """
@@ -17,9 +16,12 @@ from vbinds.enums import IconSize, get_icon_url
 LOG = logging.getLogger(__name__)
 
 
-def get_icon(name: str, dest_root: str = ".",
-             size: IconSize = IconSize.LARGE,
-             size_subdir: bool = True) -> Optional[str]:
+def get_icon(
+    name: str,
+    dest_root: str = ".",
+    size: IconSize = IconSize.LARGE,
+    size_subdir: bool = True,
+) -> Optional[str]:
     """
     Write an image file to disk for a given icon. Return the path written.
     """
@@ -27,8 +29,9 @@ def get_icon(name: str, dest_root: str = ".",
     # start the icon-query stream
     req = requests.get(get_icon_url(name, size), stream=True)
     if req.status_code != requests.codes["ok"]:
-        LOG.error("error getting icon '%s': %d %s", name, req.status_code,
-                  req.text)
+        LOG.error(
+            "error getting icon '%s': %d %s", name, req.status_code, req.text
+        )
         return None
 
     # write the file contents

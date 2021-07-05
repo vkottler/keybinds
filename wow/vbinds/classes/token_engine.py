@@ -1,4 +1,3 @@
-
 """
 vbinds - A class for managing Blizzard API access tokens acquired from
          application identity and secret pairs.
@@ -19,7 +18,7 @@ from .cache import Cache
 
 
 class TokenEngine:
-    """ A class for obtaining API-access tokens from Blizzard. """
+    """A class for obtaining API-access tokens from Blizzard."""
 
     log = logging.getLogger(__name__)
     token_server = "https://{}.battle.net/oauth/token"
@@ -48,9 +47,11 @@ class TokenEngine:
             return token
 
         # get a new token
-        req = requests.post(TokenEngine.token_server.format(self.region.value),
-                            data={"grant_type": "client_credentials"},
-                            auth=(cred_data["id"], cred_data["secret"]))
+        req = requests.post(
+            TokenEngine.token_server.format(self.region.value),
+            data={"grant_type": "client_credentials"},
+            auth=(cred_data["id"], cred_data["secret"]),
+        )
 
         # make sure we got a valid response
         if req.status_code != requests.codes["ok"]:
@@ -76,20 +77,26 @@ class TokenEngine:
 
         # try to load (and set) credentials if we don't have them
         if "id" not in cred_data or "secret" not in cred_data:
-            if (ID_ENV_KEY not in os.environ or
-                    SECRET_ENV_KEY not in os.environ):
-                err_msg = ("Couldn't load identity and secret from " +
-                           "environment variables '%s' and '%s'")
+            if (
+                ID_ENV_KEY not in os.environ
+                or SECRET_ENV_KEY not in os.environ
+            ):
+                err_msg = (
+                    "Couldn't load identity and secret from "
+                    + "environment variables '%s' and '%s'"
+                )
                 TokenEngine.log.error(err_msg, ID_ENV_KEY, SECRET_ENV_KEY)
                 return None
-            self.set_credentials(os.environ[ID_ENV_KEY],
-                                 os.environ[SECRET_ENV_KEY])
+            self.set_credentials(
+                os.environ[ID_ENV_KEY], os.environ[SECRET_ENV_KEY]
+            )
             cred_data = self.cache.get("creds")
 
         return cred_data
 
-    def set_credentials(self, client_id, client_secret,
-                        write_cache: bool = True):
+    def set_credentials(
+        self, client_id, client_secret, write_cache: bool = True
+    ):
         """
         Set new credentials' data and optionally write-through to the cache.
         """

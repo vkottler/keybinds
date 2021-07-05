@@ -1,4 +1,3 @@
-
 """
 vbinds - An interface for working with a playable specializations.
 """
@@ -13,7 +12,7 @@ from .talent import Talent
 
 
 def level_to_index(level: int) -> int:
-    """ From a talen row's 'level', get the one-indexed translation. """
+    """From a talen row's 'level', get the one-indexed translation."""
 
     level_data = {
         15: 1,
@@ -28,13 +27,14 @@ def level_to_index(level: int) -> int:
 
 
 def is_talent_active(talent_data: dict) -> bool:
-    """ Determine if a talent is active or passive, based on the API data. """
+    """Determine if a talent is active or passive, based on the API data."""
 
     return talent_data["spell_tooltip"]["cast_time"].lower() != "passive"
 
 
-def build_row_macro(row_idx: int,
-                    row_data: dict) -> Optional[Tuple[str, List[str]]]:
+def build_row_macro(
+    row_idx: int, row_data: dict
+) -> Optional[Tuple[str, List[str]]]:
     """
     For a given talent row, build a macro to arbitrate non-passive abilities
     if applicable.
@@ -50,8 +50,9 @@ def build_row_macro(row_idx: int,
     if len(non_passives) > 1:
         strval = "#showtooltip{}/cast ".format(os.linesep)
         for ability in non_passives:
-            strval += "[talent:{}/{}] {}; ".format(row_idx, ability[1],
-                                                   ability[0])
+            strval += "[talent:{}/{}] {}; ".format(
+                row_idx, ability[1], ability[0]
+            )
         strval = strval.rstrip()
         val = strval, strval.split(os.linesep)
 
@@ -60,10 +61,10 @@ def build_row_macro(row_idx: int,
 
 # pylint: disable=too-many-locals
 class Specialization:
-    """ An interface for working with spec data. """
+    """An interface for working with spec data."""
 
     def __init__(self, engine: Engine, spec_id: int):
-        """ Initialize spec data from its numeric identity. """
+        """Initialize spec data from its numeric identity."""
 
         self.engine = engine
         self.data = engine.get_spec(spec_id)
@@ -77,12 +78,14 @@ class Specialization:
             talent_row = {}
             for talent_data in tier_data["talents"]:
                 ttip = talent_data["spell_tooltip"]
-                f_str = "({}, {}) {}".format(talent_data["talent"]["name"],
-                                             ttip["cast_time"],
-                                             ttip["description"])
+                f_str = "({}, {}) {}".format(
+                    talent_data["talent"]["name"],
+                    ttip["cast_time"],
+                    ttip["description"],
+                )
                 talent_row[talent_data["column_index"] + 1] = {
                     "text": f_str,
-                    "raw": talent_data
+                    "raw": talent_data,
                 }
 
             # save tiers as one-indexed
@@ -121,8 +124,9 @@ class Specialization:
                 rdata["macro_lines"] = self.macros[row][1]
             rdata["talents"] = {}
             for talent_idx, talent_data in data.items():
-                tdata = Talent(self.engine,
-                               talent_data["raw"]["talent"]["id"]).to_serialize
+                tdata = Talent(
+                    self.engine, talent_data["raw"]["talent"]["id"]
+                ).to_serialize
                 tdata["active"] = is_talent_active(talent_data["raw"])
                 rdata["talents"][talent_idx] = tdata
             self.to_serialize["talent_rows"].append(rdata)
@@ -136,7 +140,7 @@ class Specialization:
         return self.data["role"]["name"]
 
     def __str__(self) -> str:
-        """ Turn the spec into a String for debugging. """
+        """Turn the spec into a String for debugging."""
 
         assert self.data is not None
         title = "{} ({})".format(self.name, self.data["role"]["name"])
@@ -147,8 +151,9 @@ class Specialization:
         for row_idx, row_data in self.talent_rows.items():
             lines.append("{}:".format(row_idx))
             for talent_idx, talent_data in row_data.items():
-                lines.append("    {}: {}".format(talent_idx,
-                                                 talent_data["text"]))
+                lines.append(
+                    "    {}: {}".format(talent_idx, talent_data["text"])
+                )
             macro = build_row_macro(row_idx, row_data)
             if macro is not None:
                 lines.append("macro:")

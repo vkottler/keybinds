@@ -1,4 +1,3 @@
-
 """
 vbinds - A game-data API query orchestrator.
 """
@@ -13,19 +12,28 @@ import requests
 
 # internal
 from vbinds.enums import (
-    Region, Locale, Namespace, get_namespace_str, get_query_str
+    Region,
+    Locale,
+    Namespace,
+    get_namespace_str,
+    get_query_str,
 )
 from .token_engine import TokenEngine
 from .cache import Cache
 
 
 class QueryEngine(TokenEngine):
-    """ A class for building and executing game-data queries. """
+    """A class for building and executing game-data queries."""
 
     log = logging.getLogger(__name__)
 
-    def __init__(self, cache: Cache, region: Region = Region.US,
-                 locale: Locale = Locale.en_US, tries: int = 3):
+    def __init__(
+        self,
+        cache: Cache,
+        region: Region = Region.US,
+        locale: Locale = Locale.en_US,
+        tries: int = 3,
+    ):
         """
         Build a query engine from a given cache, for a specific region and
         locale.
@@ -37,10 +45,14 @@ class QueryEngine(TokenEngine):
         self.has_missed = False
         self.tries = tries
 
-    def raw_query(self, path: str, namespace: Namespace,
-                  path_root: str = "data/wow",
-                  should_print: bool = False) -> Optional[dict]:
-        """ Build a query for the game-data API and return the result. """
+    def raw_query(
+        self,
+        path: str,
+        namespace: Namespace,
+        path_root: str = "data/wow",
+        should_print: bool = False,
+    ) -> Optional[dict]:
+        """Build a query for the game-data API and return the result."""
 
         namespace_str = get_namespace_str(namespace, self.region)
         namespace_data = self.cache.get(namespace_str)
@@ -59,9 +71,11 @@ class QueryEngine(TokenEngine):
         if token is not None:
             token_str = token
 
-        args = {"locale": self.locale.value,
-                "access_token": token_str,
-                "namespace": namespace_str}
+        args = {
+            "locale": self.locale.value,
+            "access_token": token_str,
+            "namespace": namespace_str,
+        }
         query_str = get_query_str(self.region, full_path)
         QueryEngine.log.debug("query: '%s'", query_str)
 
@@ -73,8 +87,12 @@ class QueryEngine(TokenEngine):
 
         # make sure we got a valid response
         if req.status_code != requests.codes["ok"]:
-            QueryEngine.log.error("error querying '%s': %d %s", full_path,
-                                  req.status_code, req.text)
+            QueryEngine.log.error(
+                "error querying '%s': %d %s",
+                full_path,
+                req.status_code,
+                req.text,
+            )
             return None
 
         # write the cached result
@@ -84,7 +102,7 @@ class QueryEngine(TokenEngine):
         return namespace_data[full_path]
 
     def save(self) -> None:
-        """ Write the cache based on current data. """
+        """Write the cache based on current data."""
 
         if self.has_missed:
             self.cache.save()
@@ -97,9 +115,11 @@ class QueryEngine(TokenEngine):
         namespace_str = get_namespace_str(Namespace.Static, self.region)
         return "{}/{}".format(path_root, path) in self.cache.get(namespace_str)
 
-    def static_query(self, path: str,
-                     should_print: bool = False) -> Optional[dict]:
-        """ Execute a query for static data. """
+    def static_query(
+        self, path: str, should_print: bool = False
+    ) -> Optional[dict]:
+        """Execute a query for static data."""
 
-        return self.raw_query(path, Namespace.Static,
-                              should_print=should_print)
+        return self.raw_query(
+            path, Namespace.Static, should_print=should_print
+        )

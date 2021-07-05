@@ -1,4 +1,3 @@
-
 """
 vbinds - Test that downloading icons works.
 """
@@ -11,7 +10,7 @@ from vbinds.icons import get_icon, IconSize
 
 
 def test_get_icon_basic():
-    """ Test that downloading icons works. """
+    """Test that downloading icons works."""
 
     ico_name = "spell_frost_frostshock"
     with tempfile.TemporaryDirectory() as tmp_dir:

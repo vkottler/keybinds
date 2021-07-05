@@ -1,4 +1,3 @@
-
 """
 vbinds - Tests for token retrieval.
 """
@@ -26,7 +25,7 @@ def test_token_engine_basic():
 
 
 def test_token_failures():
-    """ Test some of the token-retrieval failure modes. """
+    """Test some of the token-retrieval failure modes."""
 
     # bad identity and secret values
     engine = TokenEngine(get_new_cache())

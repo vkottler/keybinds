@@ -1,4 +1,3 @@
-
 """
 vbinds - Tests high-level queries.
 """
@@ -11,7 +10,7 @@ from vbinds.classes.engine import Engine
 
 
 def test_engine_queries():
-    """ Test query-engine calls. """
+    """Test query-engine calls."""
 
     engine = Engine(get_new_cache())
     assert engine.get_classes(True) is not None

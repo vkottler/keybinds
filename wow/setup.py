@@ -1,7 +1,7 @@
 # =====================================
 # generator=datazen
-# version=1.6.7
-# hash=b194ed1ff709bbd1ec48b3c31ba52734
+# version=1.7.6
+# hash=c9fa84685e3f942cdda952632ee99b24
 # =====================================
 
 """
@@ -9,15 +9,17 @@ vbinds - Package definition for distribution.
 """
 
 # third-party
-from vmklib.setup import setup  # type: ignore
+from vmklib.setup import setup
 
 # internal
 from vbinds import PKG_NAME, VERSION, DESCRIPTION
 
 
-author_info = {"name": "Vaughn Kottler",
-               "email": "vaughnkottler@gmail.com",
-               "username": "vkottler"}
+author_info = {
+    "name": "Vaughn Kottler",
+    "email": "vaughnkottler@gmail.com",
+    "username": "vkottler",
+}
 pkg_info = {"name": PKG_NAME, "version": VERSION, "description": DESCRIPTION}
 setup(
     pkg_info,

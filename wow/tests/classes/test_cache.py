@@ -1,4 +1,3 @@
-
 """
 vbinds - Tests for the data cache.
 """
@@ -11,7 +10,7 @@ from vbinds.classes.cache import Cache
 
 
 def test_cache_basic():
-    """ Test that a second cache-load will have the correct data. """
+    """Test that a second cache-load will have the correct data."""
 
     cache = get_new_cache()
     test_data = cache.get("test")

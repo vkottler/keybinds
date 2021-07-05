@@ -1,4 +1,3 @@
-
 """
 vbinds - This package's command-line entry-point application.
 """
@@ -15,7 +14,7 @@ from vbinds.classes.playable_class import get_classes
 
 
 def entry(args: argparse.Namespace) -> int:
-    """ Execute the requested task. """
+    """Execute the requested task."""
 
     args.out_dir = os.path.abspath(args.out_dir)
 
@@ -39,9 +38,18 @@ def entry(args: argparse.Namespace) -> int:
 
 
 def add_app_args(parser: argparse.ArgumentParser) -> None:
-    """ Add application-specific arguments to the command-line parser. """
+    """Add application-specific arguments to the command-line parser."""
 
-    parser.add_argument("-o", "--out-dir", default=os.getcwd(),
-                        help="root directory for program outputs")
-    parser.add_argument("-i", "--indent", default=0, type=int,
-                        help="indent argument for json serialization")
+    parser.add_argument(
+        "-o",
+        "--out-dir",
+        default=os.getcwd(),
+        help="root directory for program outputs",
+    )
+    parser.add_argument(
+        "-i",
+        "--indent",
+        default=0,
+        type=int,
+        help="indent argument for json serialization",
+    )

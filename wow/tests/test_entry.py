@@ -1,4 +1,3 @@
-
 """
 vbinds - Test the program entry-point.
 """

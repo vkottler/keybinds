@@ -1,4 +1,3 @@
-
 """
 vbinds - Tests game-data queries.
 """
@@ -11,7 +10,7 @@ from vbinds.classes.query_engine import QueryEngine
 
 
 def test_query_engine_basic():
-    """ Test some static queries to the blizzard API. """
+    """Test some static queries to the blizzard API."""
 
     engine = QueryEngine(get_new_cache())
     assert engine.static_query("playable-class/index", True) is not None

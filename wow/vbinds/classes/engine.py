@@ -1,4 +1,3 @@
-
 """
 vbinds - A collection of all implemented query extensions.
 """
@@ -14,7 +13,7 @@ from .spec_data_engine import SpecDataEngine
 
 
 class Engine(ClassDataEngine, SpecDataEngine):
-    """ Doesn't implement anything, just aggregates functionality. """
+    """Doesn't implement anything, just aggregates functionality."""
 
 
 def engine_from_output_root(output_dir: str) -> Engine:

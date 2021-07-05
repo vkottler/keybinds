@@ -1,4 +1,3 @@
-
 """
 vbinds - Icon-file managing cache.
 """
@@ -16,12 +15,12 @@ from vbinds.enums import IconSize
 
 
 class IconCache:
-    """ Class for loading icons and tracking which ones have been loaded. """
+    """Class for loading icons and tracking which ones have been loaded."""
 
     log = logging.getLogger(__name__)
 
     def __init__(self, icon_dir: str):
-        """ Load an existing icon cache or construct a new one. """
+        """Load an existing icon cache or construct a new one."""
 
         self.dir = icon_dir
         os.makedirs(self.dir, exist_ok=True)
@@ -29,7 +28,7 @@ class IconCache:
         self.load()
 
     def get(self, name: str, size: IconSize = IconSize.LARGE) -> Optional[str]:
-        """ Download an icon and save it to the cache. """
+        """Download an icon and save it to the cache."""
 
         data = self.data[str(size.value)]
         if not self.has(name, size):
@@ -37,12 +36,12 @@ class IconCache:
         return data[name]
 
     def has(self, name: str, size: IconSize = IconSize.LARGE) -> bool:
-        """ Check if we have a named-icon in this cache. """
+        """Check if we have a named-icon in this cache."""
 
         return name in self.data[str(size.value)]
 
     def clean(self) -> None:
-        """ Remove icons in this cache and clear data. """
+        """Remove icons in this cache and clear data."""
 
         shutil.rmtree(self.dir)
         os.makedirs(self.dir)

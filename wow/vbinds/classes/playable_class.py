@@ -1,4 +1,3 @@
-
 """
 vbinds - An interface for working with a playable class.
 """
@@ -13,10 +12,10 @@ from .specialization import Specialization
 
 
 class PlayableClass:
-    """ An interface for working with class data. """
+    """An interface for working with class data."""
 
     def __init__(self, engine: Engine, class_id: int):
-        """ Initialize a class from its numeric identity. """
+        """Initialize a class from its numeric identity."""
 
         self.engine = engine
 
@@ -45,7 +44,7 @@ class PlayableClass:
             self.to_serialize["specs"].append(spec.to_serialize)
 
     def roles(self) -> List[str]:
-        """ Get the list of roles this class can fulfill. """
+        """Get the list of roles this class can fulfill."""
 
         role_list = []
         for spec in self.specs.values():
@@ -55,7 +54,7 @@ class PlayableClass:
         return role_list
 
     def macros(self) -> Dict[str, List[str]]:
-        """ Collect all of the talent macros for this class. """
+        """Collect all of the talent macros for this class."""
 
         result: Dict[str, List[str]] = {}
         for spec in self.specs.values():
@@ -65,7 +64,7 @@ class PlayableClass:
         return result
 
     def __str__(self) -> str:
-        """ Turn the class into a String for debugging. """
+        """Turn the class into a String for debugging."""
 
         assert self.data is not None
         border = "****************************************"
@@ -78,7 +77,7 @@ class PlayableClass:
 
 
 def get_classes(engine: Engine) -> Dict[str, PlayableClass]:
-    """ Using the query engine, get a list of all playable-class objects. """
+    """Using the query engine, get a list of all playable-class objects."""
 
     classes = engine.get_classes()
     assert classes is not None

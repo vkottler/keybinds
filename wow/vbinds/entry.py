@@ -1,7 +1,7 @@
 # =====================================
 # generator=datazen
-# version=1.6.7
-# hash=8cc507680798fe6a45fac5fb68b8f931
+# version=1.7.6
+# hash=ada5cdf20e86f882222a059aad6e3e38
 # =====================================
 
 """
@@ -20,7 +20,7 @@ from vbinds.app import entry, add_app_args
 
 
 def main(argv: List[str] = None) -> int:
-    """ Program entry-point. """
+    """Program entry-point."""
 
     result = 0
 
@@ -31,10 +31,17 @@ def main(argv: List[str] = None) -> int:
 
     # initialize argument parsing
     parser = argparse.ArgumentParser(description=DESCRIPTION)
-    parser.add_argument("--version", action="version",
-                        version="%(prog)s {0}".format(VERSION))
-    parser.add_argument("-v", "--verbose", action="store_true",
-                        help="set to increase logging verbosity")
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="%(prog)s {0}".format(VERSION),
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="set to increase logging verbosity",
+    )
 
     add_app_args(parser)
 
@@ -45,9 +52,10 @@ def main(argv: List[str] = None) -> int:
 
         # initialize logging
         log_level = logging.DEBUG if args.verbose else logging.INFO
-        logging.basicConfig(level=log_level,
-                            format=("%(name)-36s - %(levelname)-6s - "
-                                    "%(message)s"))
+        logging.basicConfig(
+            level=log_level,
+            format="%(name)-36s - %(levelname)-6s - %(message)s",
+        )
 
         # run the application
         result = entry(args)

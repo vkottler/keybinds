@@ -1,4 +1,3 @@
-
 """
 vbinds - Tests for icon management.
 """
@@ -11,7 +10,7 @@ from vbinds.classes.icon_cache import IconCache
 
 
 def test_icon_cache_basic():
-    """ Load an icon and make sure that re-loading from a directory works. """
+    """Load an icon and make sure that re-loading from a directory works."""
 
     icon_cache = IconCache(tempfile.mkdtemp())
     assert icon_cache.get("spell_frost_frostshock") is not None

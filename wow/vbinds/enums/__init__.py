@@ -1,4 +1,3 @@
-
 """
 vbinds - Useful enumeration definitions.
 """
@@ -63,7 +62,7 @@ class Namespace(Enum):
 
 
 def get_query_str(region: Region, query_str: str) -> str:
-    """ Build a query URL based on the region and the query sub-String. """
+    """Build a query URL based on the region and the query sub-String."""
 
     query_format_str = "https://gateway.battlenet.com.{0}/{1}"
     if Region != Region.CN:
@@ -72,7 +71,7 @@ def get_query_str(region: Region, query_str: str) -> str:
 
 
 def get_namespace_str(namespace: Namespace, region: Region):
-    """ Get a fully-qualified namespace String. """
+    """Get a fully-qualified namespace String."""
 
     return namespace.value.format(region.value)
 
@@ -89,7 +88,7 @@ class IconSize(Enum):
 
 
 def get_icon_url(name: str, size: IconSize):
-    """ Get the web-url for a named icon. """
+    """Get the web-url for a named icon."""
 
     file_name = "{}.jpg".format(name)
     icon_url_fmt = "http://media.blizzard.com/wow/icons/{}/{}"

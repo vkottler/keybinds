@@ -1,4 +1,3 @@
-
 """
 vbinds - Constants for class definitions.
 """
