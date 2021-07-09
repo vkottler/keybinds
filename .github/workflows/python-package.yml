@@ -6,14 +6,13 @@ on:
   pull_request:
     branches: [ master ]
 
-# add Python 3.9 back when it's fully supported by pylint etc.
 jobs:
   build:
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.7, 3.8]
+        python-version: [3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@master
