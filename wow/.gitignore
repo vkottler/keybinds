@@ -13,3 +13,4 @@ icons
 .*.env
 .*_cache
 datazen-out
+.github

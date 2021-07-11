@@ -1,13 +1,15 @@
 <!--
     =====================================
     generator=datazen
-    version=1.7.6
-    hash=76d328902105bd71b6d8fa26c0ba44a1
+    version=1.7.7
+    hash=e448b91198d9791e04242cb9053155a8
     =====================================
 -->
 
-# blizzard-api
+# blizzard-api ([0.3.2](https://pypi.org/project/blizzard-api/))
 
-![Python package](https://github.com/vkottler/keybinds/workflows/Python%20package/badge.svg)
+[![python](https://img.shields.io/pypi/pyversions/blizzard-api.svg)](https://pypi.org/project/blizzard-api/)
+![Build Status](https://github.com/vkottler/keybinds/workflows/Python%20package/badge.svg)
+[![codecov](https://codecov.io/gh/vkottler/keybinds/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/github/vkottler/keybinds)
 
-Interact with Blizard's game-data API.
+*Interact with Blizard's game-data API.*
