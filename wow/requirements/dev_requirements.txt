@@ -1,2 +1,2 @@
 datazen
-vmklib
+vmklib==0.4.14
