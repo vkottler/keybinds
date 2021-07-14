@@ -1,2 +1,2 @@
-datazen
+datazen==1.7.7
 vmklib
