@@ -18,9 +18,13 @@ variables:
 renders:
 - name: "README.md"
   output_dir: "."
+- name: "LICENSE"
+  key: "LICENSE_MIT"
+  output_dir: "."
 
 groups:
 - name: "all"
   dependencies:
+  - "renders-LICENSE"
   - "renders-README.md"
   - "groups-python"

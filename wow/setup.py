@@ -1,7 +1,7 @@
 # =====================================
 # generator=datazen
-# version=1.7.8
-# hash=d810200579db610199f80115c4440a93
+# version=1.7.7
+# hash=0c9d67cd51ee855a9e728b1d6087ad37
 # =====================================
 
 """
@@ -22,6 +22,7 @@ author_info = {
 }
 pkg_info = {
     "name": PKG_NAME,
+    "slug": PKG_NAME.replace("-", "_"),
     "version": VERSION,
     "description": DESCRIPTION,
     "versions": [
